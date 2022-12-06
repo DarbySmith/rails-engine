@@ -1,6 +1,49 @@
 {
   "RSpec": {
     "coverage": {
+      "/Users/darbysmith/turing_work/3mod/projects/rails-engine/app/models/customer.rb": {
+        "lines": [
+          1,
+          1,
+          1,
+          1,
+          1,
+          null,
+          1,
+          null
+        ]
+      },
+      "/Users/darbysmith/turing_work/3mod/projects/rails-engine/app/models/application_record.rb": {
+        "lines": [
+          1,
+          1,
+          null
+        ]
+      },
+      "/Users/darbysmith/turing_work/3mod/projects/rails-engine/app/models/invoice_item.rb": {
+        "lines": [
+          1,
+          1,
+          1,
+          1,
+          null,
+          1,
+          null
+        ]
+      },
+      "/Users/darbysmith/turing_work/3mod/projects/rails-engine/app/models/invoice.rb": {
+        "lines": [
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          null,
+          1,
+          null
+        ]
+      },
       "/Users/darbysmith/turing_work/3mod/projects/rails-engine/app/models/item.rb": {
         "lines": [
           1,
@@ -14,18 +57,21 @@
           null
         ]
       },
-      "/Users/darbysmith/turing_work/3mod/projects/rails-engine/app/models/application_record.rb": {
-        "lines": [
-          1,
-          1,
-          null
-        ]
-      },
       "/Users/darbysmith/turing_work/3mod/projects/rails-engine/app/models/merchant.rb": {
         "lines": [
           1,
           1,
           1,
+          1,
+          1,
+          1,
+          null,
+          1,
+          null
+        ]
+      },
+      "/Users/darbysmith/turing_work/3mod/projects/rails-engine/app/models/transaction.rb": {
+        "lines": [
           1,
           1,
           1,
@@ -49,76 +95,20 @@
           null
         ]
       },
-      "/Users/darbysmith/turing_work/3mod/projects/rails-engine/app/models/invoice.rb": {
-        "lines": [
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-          null,
-          0,
-          0
-        ],
-        "branches": {
-        }
-      },
-      "/Users/darbysmith/turing_work/3mod/projects/rails-engine/app/models/customer.rb": {
-        "lines": [
-          0,
-          0,
-          0,
-          0,
-          0,
-          null,
-          0,
-          0
-        ],
-        "branches": {
-        }
-      },
-      "/Users/darbysmith/turing_work/3mod/projects/rails-engine/app/models/invoice_item.rb": {
-        "lines": [
-          0,
-          0,
-          0,
-          0,
-          null,
-          0,
-          0
-        ],
-        "branches": {
-        }
-      },
-      "/Users/darbysmith/turing_work/3mod/projects/rails-engine/app/models/transaction.rb": {
-        "lines": [
-          0,
-          0,
-          0,
-          null,
-          0,
-          0
-        ],
-        "branches": {
-        }
-      },
       "/Users/darbysmith/turing_work/3mod/projects/rails-engine/app/controllers/api/v1/merchants_controller.rb": {
         "lines": [
-          0,
-          0,
-          0,
-          0,
+          1,
+          1,
+          1,
           null,
-          0,
-          0,
-          0,
-          0
-        ],
-        "branches": {
-        }
+          null,
+          1,
+          1,
+          null,
+          null
+        ]
       }
     },
-    "timestamp": 1670299452
+    "timestamp": 1670300343
   }
 }
