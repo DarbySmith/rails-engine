@@ -11,6 +11,15 @@ class Api::V1::ItemsController < ApplicationController
     render json: ItemSerializer.new(Item.create!(item_params)), status: :created
   end
 
+  def update
+    if Item.update(params[:id], item_params).save
+      require 'pry'; binding.pry
+      render json: ItemSerializer.new(Item.update(params[:id], item_params))
+    else
+      render json: {error: "unable to update" }, status: 400
+    end
+  end
+
   private
   def item_params
     params.require(:item).permit(:name, :description, :unit_price, :merchant_id)
