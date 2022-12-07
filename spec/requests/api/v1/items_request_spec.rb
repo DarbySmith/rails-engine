@@ -72,13 +72,7 @@ RSpec.describe 'Items API' do
   it 'can update an item' do
     item = create(:item)
     previous_name = Item.last.name
-    item_params = {
-      "id": item.id,
-      "name": "Ken",
-      "description": item.description,
-      "unit_price": item.unit_price,
-      "merchant_id": item.merchant_id
-    }
+    item_params = { "name": "Ken" }
 
     headers = { "CONTENT_TYPE" => "application/json" }
     
