@@ -75,6 +75,69 @@ RSpec.describe 'Items API' do
     expect(created_item.unit_price).to eq(item_params[:unit_price])
   end
 
+  it 'returns a 400 error when unit price is not number' do
+    merchant_id = create(:merchant).id
+    item_params = {
+      name: "Barbies",
+      description: "Antique toy",
+      unit_price: "number",
+      merchant_id: merchant_id
+    }
+    
+    headers = { "CONTENT_TYPE" => "application/json" }
+
+    post '/api/v1/items', headers: headers, params: JSON.generate(item: item_params)
+
+    expect(response).to have_http_status(400)
+  end
+
+  it 'returns a 400 error when there is no name' do
+    merchant_id = create(:merchant).id
+    item_params = {
+      name: "",
+      description: "Antique toy",
+      unit_price: 14.58,
+      merchant_id: merchant_id
+    }
+    
+    headers = { "CONTENT_TYPE" => "application/json" }
+
+    post '/api/v1/items', headers: headers, params: JSON.generate(item: item_params)
+
+    expect(response).to have_http_status(400)
+  end
+
+  it 'returns a 400 error when description is not present' do
+    merchant_id = create(:merchant).id
+    item_params = {
+      name: "Barbies",
+      description: "",
+      unit_price: 18.44,
+      merchant_id: merchant_id
+    }
+    
+    headers = { "CONTENT_TYPE" => "application/json" }
+
+    post '/api/v1/items', headers: headers, params: JSON.generate(item: item_params)
+
+    expect(response).to have_http_status(400)
+  end
+
+  it 'returns a 400 error when merchant does not exist' do
+    item_params = {
+      name: "Barbies",
+      description: "Antique toy",
+      unit_price: 42.56,
+      merchant_id: ""
+    }
+    
+    headers = { "CONTENT_TYPE" => "application/json" }
+
+    post '/api/v1/items', headers: headers, params: JSON.generate(item: item_params)
+
+    expect(response).to have_http_status(400)
+  end
+
   it 'can update an item' do
     item = create(:item)
     previous_name = Item.last.name
