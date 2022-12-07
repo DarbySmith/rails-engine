@@ -72,13 +72,7 @@ RSpec.describe 'Items API' do
   it 'can update an item' do
     item = create(:item)
     previous_name = Item.last.name
-    item_params = {
-      "id": item.id,
-      "name": "Ken",
-      "description": item.description,
-      "unit_price": item.unit_price,
-      "merchant_id": item.merchant_id
-    }
+    item_params = { "name": "Ken" }
 
     headers = { "CONTENT_TYPE" => "application/json" }
     
@@ -88,5 +82,18 @@ RSpec.describe 'Items API' do
     expect(response).to be_successful
     expect(item.name).to_not eq(previous_name)
     expect(item.name).to eq("Ken")
+  end
+
+
+  it 'can destroy and item' do
+    item = create(:item)
+    
+    expect(Item.count).to eq(1)
+
+    delete "/api/v1/items/#{item.id}"
+
+    expect(response).to be_successful
+    expect(Item.count).to eq(0)
+    expect{Item.find(item.id)}.to raise_error(ActiveRecord::RecordNotFound)
   end
 end
