@@ -48,6 +48,12 @@ RSpec.describe 'Items API' do
     expect(item[:attributes][:merchant_id]).to be_an(Integer)
   end
 
+  it 'returns a 400 error when an item id does not exist' do
+    get "/api/v1/items/1"
+
+    expect(response).to have_http_status(404)
+  end
+
   it 'can create a new item' do
     merchant_id = create(:merchant).id
     item_params = {
@@ -84,6 +90,27 @@ RSpec.describe 'Items API' do
     expect(item.name).to eq("Ken")
   end
 
+  it 'returns a 400 error when an item unit price is invalid' do
+    item = create(:item)
+    previous_name = Item.last.name
+    item_params = { unit_price: "high" }
+
+    headers = { "CONTENT_TYPE" => "application/json" }
+    
+    patch "/api/v1/items/#{item.id}", headers: headers, params: JSON.generate(item: item_params)
+
+    expect(response).to have_http_status(404)
+  end
+
+  it 'returns a 400 error when item to update does not exist' do
+    item_params = { "name": "Ken" }
+
+    headers = { "CONTENT_TYPE" => "application/json" }
+    
+    patch "/api/v1/items/1", headers: headers, params: JSON.generate(item: item_params)
+
+    expect(response).to have_http_status(404)
+  end
 
   it 'can destroy and item' do
     item = create(:item)
