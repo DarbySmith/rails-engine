@@ -7,7 +7,7 @@ class Api::V1::ItemsController < ApplicationController
     if Item.exists?(params[:id])
       render json: ItemSerializer.new(Item.find(params[:id]))
     else
-      render json: {error: "item does not exist"}, status: 404
+      render json: {errors: "item does not exist"}, status: 404
     end
   end
 
@@ -15,7 +15,7 @@ class Api::V1::ItemsController < ApplicationController
     if Item.new(item_params).save
       render json: ItemSerializer.new(Item.create!(item_params)), status: :created
     else 
-      render json: { error: "item not created" }, status: 400
+      render json: { errors: "item not created" }, status: 400
     end
   end
 
@@ -23,7 +23,7 @@ class Api::V1::ItemsController < ApplicationController
     if Item.exists?(params[:id]) && Item.update(params[:id], item_params).save 
       render json: ItemSerializer.new(Item.update(params[:id], item_params))
     else
-      render json: {error: "unable to update" }, status: 404
+      render json: {errors: "unable to update" }, status: 404
     end
   end
 
