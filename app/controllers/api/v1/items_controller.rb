@@ -1,14 +1,6 @@
 class Api::V1::ItemsController < ApplicationController
   def index
-    if params[:merchant_id]
-      if Merchant.exists?(params[:merchant_id])
-        render json: ItemSerializer.new(Item.where(merchant_id: params[:merchant_id]))
-      else
-        render json: {error: "unable to find" }, status: 404
-      end
-    else
-      render json: ItemSerializer.new(Item.all)
-    end
+    render json: ItemSerializer.new(Item.all)
   end
 
   def show
