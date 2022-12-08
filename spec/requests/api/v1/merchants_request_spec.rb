@@ -35,4 +35,22 @@ RSpec.describe 'Merchants API' do
 
     expect(response).to have_http_status(404)
   end
+
+  it 'can find all merchants with name match' do
+    merchant_1 = create(:merchant, name: "Bunny Hops")
+    merchant_2 = create(:merchant, name: "Chapstick")
+    merchant_3 = create(:merchant, name: "Shopaholics")
+    merchant_3 = create(:merchant, name: "Orthopedic shoes")
+
+    get '/api/v1/merchants/find_all?name=hop'
+
+    expect(response).to be_successful
+
+    merchants = JSON.parse(response.body, symbolize_names: true)[:data]
+
+    merchants.each do |merchant|
+      expect(merchant[:attributes]).to have_key(:name)
+      expect(merchant[:attributes][:name]).to be_a(String) 
+    end
+  end
 end

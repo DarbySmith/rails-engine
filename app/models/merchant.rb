@@ -6,4 +6,9 @@ class Merchant < ApplicationRecord
   has_many :transactions, through: :invoices
 
   validates_presence_of :name
+
+  def self.search(name)
+    self.order(:name)
+      .where("name ILIKE ?", "%#{name}%")
+  end
 end
