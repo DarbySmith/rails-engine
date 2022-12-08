@@ -186,4 +186,23 @@ RSpec.describe 'Items API' do
     expect(Item.count).to eq(0)
     expect{Item.find(item.id)}.to raise_error(ActiveRecord::RecordNotFound)
   end
+
+  it 'destroys invoices that only have the destroyed item' do
+    merchant_1 = create(:merchant)
+    merchant_2 = create(:merchant)
+
+    items_1 = create(:item, merchant_id: merchant_1.id)
+    items_2 = create(:item, merchant_id: merchant_2.id)
+
+    invoices_1 = create(:invoice, merchant_id: merchant_1.id)
+    invoices_2 = create(:invoice, merchant_id: merchant_1.id)
+
+    invoice_item_1 = create(:invoice_item, item_id: items_1.id, invoice_id: invoices_1.id)
+    invoice_item_2 = create(:invoice_item, item_id: items_1.id, invoice_id: invoices_2.id)
+    invoice_item_3 = create(:invoice_item, item_id: items_2.id, invoice_id: invoices_2.id)
+
+    delete "/api/v1/items/#{items_1.id}"
+
+    expect(response).to be_successful
+  end
 end

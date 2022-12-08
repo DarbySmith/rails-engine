@@ -2,6 +2,6 @@ FactoryBot.define do
   factory :invoice do
     customer
     merchant
-    status { Faker::Random.array(['shipped', 'packaged', 'returned'])}
+    status { Faker::Base.sample(['shipped', 'packaged', 'returned'])}
   end
 end
