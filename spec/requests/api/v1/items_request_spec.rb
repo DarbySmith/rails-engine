@@ -186,4 +186,55 @@ RSpec.describe 'Items API' do
     expect(Item.count).to eq(0)
     expect{Item.find(item.id)}.to raise_error(ActiveRecord::RecordNotFound)
   end
+
+  it 'can find one item by name' do
+    item = create(:item, name: "thingy")
+
+    get "/api/v1/items/find?name=thi"
+
+    result = JSON.parse(response.body, symbolize_names: true)[:data]
+
+    expect(response).to be_successful
+    
+    expect(result[:attributes]).to have_key(:name)
+    expect(result[:attributes][:name]).to be_a(String)
+
+    expect(result[:attributes]).to have_key(:description)
+    expect(result[:attributes][:description]).to be_a(String)
+
+    expect(result[:attributes]).to have_key(:unit_price)
+    expect(result[:attributes][:unit_price]).to be_a(Float)
+
+    expect(result[:attributes]).to have_key(:merchant_id)
+    expect(result[:attributes][:merchant_id]).to be_a(Integer)
+  end
+
+  it 'returns the item that is alpabetically first' do
+    item = create(:item, name: "thingy")
+    item = create(:item, name: "chicken")
+
+    get "/api/v1/items/find?name=hi"
+
+    result = JSON.parse(response.body, symbolize_names: true)[:data]
+
+    expect(response).to be_successful
+    
+    expect(result[:attributes]).to have_key(:name)
+    expect(result[:attributes][:name]).to be_a(String)
+
+    expect(result[:attributes]).to have_key(:description)
+    expect(result[:attributes][:description]).to be_a(String)
+
+    expect(result[:attributes]).to have_key(:unit_price)
+    expect(result[:attributes][:unit_price]).to be_a(Float)
+
+    expect(result[:attributes]).to have_key(:merchant_id)
+    expect(result[:attributes][:merchant_id]).to be_a(Integer)
+  end
+
+  it 'returns a 400 error if the item is not found by name' do
+    get "/api/v1/items/find?name=hi"
+
+    expect(response).to have_http_status(404)
+  end
 end
