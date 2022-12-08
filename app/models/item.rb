@@ -10,4 +10,23 @@ class Item < ApplicationRecord
   def self.search_one_name(name)
     self.order(:name).find_by("name ILIKE ?", "%#{name}%")
   end
+
+  def self.search_min_price(min)
+    self.order(:name)
+      .find_by("unit_price >= #{min}")
+  end
+
+  def self.search_max_price(max)
+    self.order(:name)
+      .find_by("unit_price <= #{max}")
+  end
+
+  def self.search_price(min, max)
+    if min > max
+      nil
+    else
+      self.order(:name)
+      .find_by("unit_price >= #{min} AND unit_price <= #{max}")
+    end
+  end
 end
