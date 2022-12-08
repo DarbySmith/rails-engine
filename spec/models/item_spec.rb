@@ -41,7 +41,14 @@ RSpec.describe Item, type: :model do
         item_1 = create(:item, unit_price: 4.99)
         item_2 = create(:item, unit_price: 2.50)
 
-        expect(Item.search_min_price(3.14))
+        expect(Item.search_min_price(3.14)).to eq(item_1)
+      end
+
+      it 'returns nil if the price is below 0' do
+        item_1 = create(:item, unit_price: 4.99)
+        item_2 = create(:item, unit_price: 2.50)
+
+        expect(Item.search_min_price(-1.14)).to eq(nil)
       end
     end
 
@@ -51,6 +58,13 @@ RSpec.describe Item, type: :model do
         item_2 = create(:item, unit_price: 2.50)
 
         expect(Item.search_max_price(3.14)).to eq(item_2)
+      end
+
+      it 'returns nil if the price is below 0' do
+        item_1 = create(:item, unit_price: 4.99)
+        item_2 = create(:item, unit_price: 2.50)
+
+        expect(Item.search_max_price(-1.14)).to eq(nil)
       end
     end
 
@@ -71,6 +85,13 @@ RSpec.describe Item, type: :model do
         item_4 = create(:item, name: "D", unit_price: 10.37)
         
         expect(Item.search_price(5.26, 1.54)).to eq(nil)
+      end
+
+      it 'returns nil if the price is below 0' do
+        item_1 = create(:item, unit_price: 4.99)
+        item_2 = create(:item, unit_price: 2.50)
+
+        expect(Item.search_price(-1.14, 5)).to eq(nil)
       end
     end
   end
