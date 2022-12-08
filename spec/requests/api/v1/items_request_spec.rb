@@ -343,7 +343,7 @@ RSpec.describe 'Items API' do
 
     get "/api/v1/items/find?min_price=6.45"
 
-    expect(response).to have_http_status(404)
+    expect(response).to have_http_status(400)
   end
 
   it 'returns a 400 error when no items are above the max' do
@@ -353,7 +353,7 @@ RSpec.describe 'Items API' do
 
     get "/api/v1/items/find?max_price=1.5"
 
-    expect(response).to have_http_status(404)
+    expect(response).to have_http_status(400)
   end
 
   it 'cannot send name and price together' do
@@ -362,6 +362,46 @@ RSpec.describe 'Items API' do
     item_3 = create(:item, name: "C", unit_price: 2.75)
 
     get "/api/v1/items/find?name=A&max_price=5.25"
+
+    expect(response).to have_http_status(400)
+  end
+
+  it 'returns 400 error if max is greater than min' do
+    item_1 = create(:item, name: "A", unit_price: 4.99)
+    item_2 = create(:item, name: "B", unit_price: 5.25)
+    item_3 = create(:item, name: "C", unit_price: 2.75)
+
+    get "/api/v1/items/find?min_price=5.18&max_price=3.26"
+
+    expect(response).to have_http_status(400)
+  end
+
+ it 'returns 400 error if item is not found within the params' do
+    item_1 = create(:item, name: "A", unit_price: 4.99)
+    item_2 = create(:item, name: "B", unit_price: 5.25)
+    item_3 = create(:item, name: "C", unit_price: 2.75)
+
+    get "/api/v1/items/find?min_price=1.50&max_price=2.25"
+
+    expect(response).to have_http_status(400)
+  end
+
+  it 'returns a 400 error if the min price is below 0' do
+    item_1 = create(:item, name: "A", unit_price: 4.99)
+    item_2 = create(:item, name: "B", unit_price: 5.25)
+    item_3 = create(:item, name: "C", unit_price: 2.75)
+
+    get "/api/v1/items/find?min_price=-1.1"
+
+    expect(response).to have_http_status(400)
+  end
+
+  it 'returns a 400 error if the max price is below 0' do
+    item_1 = create(:item, name: "A", unit_price: 4.99)
+    item_2 = create(:item, name: "B", unit_price: 5.25)
+    item_3 = create(:item, name: "C", unit_price: 2.75)
+
+    get "/api/v1/items/find?max_price=-6.45"
 
     expect(response).to have_http_status(400)
   end

@@ -13,7 +13,7 @@ class Item < ApplicationRecord
 
   def self.search_min_price(min)
     if min.to_i < 0
-      nil
+      false
     else
       self.order(:name)
       .find_by("unit_price >= #{min}")
@@ -22,7 +22,7 @@ class Item < ApplicationRecord
 
   def self.search_max_price(max)
     if max.to_i < 0 
-      nil
+      false
     else
       self.order(:name)
       .find_by("unit_price <= #{max}")
@@ -31,7 +31,7 @@ class Item < ApplicationRecord
 
   def self.search_price(min, max)
     if min.to_i > max.to_i || max.to_i < 0 || min.to_i < 0
-      nil
+      false
     else
       self.order(:name)
       .find_by("unit_price >= #{min} AND unit_price <= #{max}")

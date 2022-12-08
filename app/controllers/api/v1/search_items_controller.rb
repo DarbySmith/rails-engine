@@ -9,22 +9,28 @@ class Api::V1::SearchItemsController < ApplicationController
         render json: { data: { errors: 'item not found'} }, status: 404
       end
     elsif params[:min_price] && params[:max_price]
-      if !Item.search_price(params[:min_price], params[:max_price]).nil?
-        render json: ItemSerializer.new(Item.search_price(params[:min_price], params[:max_price]))
+      if Item.search_price(params[:min_price], params[:max_price]).nil?
+        render json: { data: { errors: 'item not found'}}, status: 400
+      elsif !Item.search_price(params[:min_price], params[:max_price])
+        render json: { errors: 'item not found'}, status: 400
       else
-        render json: { data: { errors: 'item not found'}}, status: 404
+        render json: ItemSerializer.new(Item.search_price(params[:min_price], params[:max_price]))
       end
     elsif params[:min_price]
-      if !Item.search_min_price(params[:min_price]).nil?
-        render json: ItemSerializer.new(Item.search_min_price(params[:min_price]))
+      if Item.search_min_price(params[:min_price]).nil?
+        render json: { data: { errors: 'item not found'}}, status: 400
+      elsif !Item.search_min_price(params[:min_price])
+        render json: {errors: 'item not found'}, status: 400
       else
-        render json: { data: { errors: 'item not found'}}, status: 404
+        render json: ItemSerializer.new(Item.search_min_price(params[:min_price]))
       end
     elsif params[:max_price]
-      if !Item.search_max_price(params[:max_price]).nil?
-        render json: ItemSerializer.new(Item.search_max_price(params[:max_price]))
+      if Item.search_max_price(params[:max_price]).nil?
+        render json: { data: { errors: 'item not found'}}, status: 400
+      elsif !Item.search_max_price(params[:max_price])
+        render json: {errors: 'item not found'}, status: 400
       else
-        render json: { data: { errors: 'item not found'}}, status: 404
+        render json: ItemSerializer.new(Item.search_max_price(params[:max_price]))
       end
     end
   end
